@@ -1,0 +1,5 @@
+export * from './useCreateMandaroty'
+export * from './useMandatories'
+export * from './useMandatory'
+export * from './useUpdateMandatory'
+export * from './useDeleteMandatory'
