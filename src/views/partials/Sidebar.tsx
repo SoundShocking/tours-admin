@@ -15,6 +15,7 @@ import {
   FaLocationDot,
   FaMoneyBill,
   FaNewspaper,
+  FaPeopleGroup,
   FaPercent,
   FaPersonShelter,
   FaUtensils,
@@ -106,6 +107,11 @@ const items: MenuProps['items'] = [
     <Link to={routes.mandatories.index}>Mandatories</Link>,
     routes.mandatories.index,
     <FaMoneyBill size={iconSize} />
+  ),
+  getItem(
+    <Link to={routes.guides.index}>Guides</Link>,
+    routes.guides.index,
+    <FaPeopleGroup size={iconSize} />
   ),
   getItem('Locations', routes.locations.index, <FaGlobe size={iconSize} />, [
     getItem(

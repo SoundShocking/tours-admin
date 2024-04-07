@@ -29,6 +29,11 @@ export const routes = {
     edit: (id: number) => `/groups/${id}`,
     index: '/groups',
   },
+  guides: {
+    create: '/guides/create',
+    edit: (id: number) => `/guides/${id}`,
+    index: '/guides',
+  },
   languages: {
     create: '/languages/create',
     edit: (id: number) => `/languages/${id}`,

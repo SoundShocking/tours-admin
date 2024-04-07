@@ -21,6 +21,9 @@ import {
   GroupCreatePage,
   GroupEditPage,
   GroupsPage,
+  GuideCreatePage,
+  GuideEditPage,
+  GuidesPage,
   LanguageCreatePage,
   LanguageEditPage,
   LanguagesPage,
@@ -373,6 +376,23 @@ export const router = createBrowserRouter([
                 element: <LocationsCityCreatePage />,
               },
             ],
+          },
+        ],
+      },
+      {
+        path: routes.guides.index,
+        children: [
+          {
+            index: true,
+            element: <GuidesPage />,
+          },
+          {
+            path: ':id',
+            element: <GuideEditPage />,
+          },
+          {
+            path: 'create',
+            element: <GuideCreatePage />,
           },
         ],
       },

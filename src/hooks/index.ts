@@ -13,6 +13,7 @@ export * from './accommodations'
 export * from './mandatories'
 export * from './locations'
 export * from './tours'
+export * from './guides'
 
 export * from './usePagination'
 export * from './useSearch'
