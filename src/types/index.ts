@@ -17,6 +17,7 @@ export * from './mandatories'
 export * from './locations'
 export * from './tours'
 export * from './guides'
+export * from './person-guides'
 
 export interface IResponseWithData<T> {
   data: T

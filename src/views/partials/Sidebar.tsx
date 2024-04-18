@@ -111,8 +111,14 @@ const items: MenuProps['items'] = [
   getItem(
     <Link to={routes.guides.index}>Guides</Link>,
     routes.guides.index,
+    <FaLanguage size={iconSize} />
+  ),
+  getItem(
+    <Link to={routes.personGuides.index}>Person Guides</Link>,
+    routes.personGuides.index,
     <FaPeopleGroup size={iconSize} />
   ),
+
   getItem('Locations', routes.locations.index, <FaGlobe size={iconSize} />, [
     getItem(
       <Link to={routes.locations.continents.index}>Continents</Link>,

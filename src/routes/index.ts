@@ -78,6 +78,11 @@ export const routes = {
     edit: (id: number) => `/operators/${id}`,
     index: '/operators',
   },
+  personGuides: {
+    create: '/person-guides/create',
+    edit: (id: number) => `/person-guides/${id}`,
+    index: '/person-guides',
+  },
   posts: {
     create: '/posts/create',
     edit: (id: number) => `/posts/${id}`,

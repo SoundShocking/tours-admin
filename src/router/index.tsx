@@ -49,6 +49,9 @@ import {
   OperatorCreatePage,
   OperatorEditPage,
   OperatorsPage,
+  PersonGuideCreatePage,
+  PersonGuideEditPage,
+  PersonGuidesPage,
   PostEditPage,
   PostsPage,
   PromotionCreatePage,
@@ -393,6 +396,23 @@ export const router = createBrowserRouter([
           {
             path: 'create',
             element: <GuideCreatePage />,
+          },
+        ],
+      },
+      {
+        path: routes.personGuides.index,
+        children: [
+          {
+            index: true,
+            element: <PersonGuidesPage />,
+          },
+          {
+            path: ':id',
+            element: <PersonGuideEditPage />,
+          },
+          {
+            path: 'create',
+            element: <PersonGuideCreatePage />,
           },
         ],
       },
