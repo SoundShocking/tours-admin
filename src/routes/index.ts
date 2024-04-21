@@ -93,6 +93,11 @@ export const routes = {
     edit: (id: number) => `/promotions/${id}`,
     index: '/promotions',
   },
+  services: {
+    create: '/services/create',
+    edit: (id: number) => `/services/${id}`,
+    index: '/services',
+  },
   statuses: {
     create: '/statuses/create',
     edit: (id: number) => `/statuses/${id}`,

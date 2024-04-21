@@ -15,6 +15,7 @@ export * from './locations'
 export * from './tours'
 export * from './guides'
 export * from './person-guides'
+export * from './services'
 
 export * from './usePagination'
 export * from './useSearch'

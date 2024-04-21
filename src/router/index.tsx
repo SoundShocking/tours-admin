@@ -57,6 +57,9 @@ import {
   PromotionCreatePage,
   PromotionEditPage,
   PromotionsPage,
+  ServiceCreatePage,
+  ServiceEditPage,
+  ServicesPage,
   StatusCreatePage,
   StatusEditPage,
   StatusesPage,
@@ -413,6 +416,23 @@ export const router = createBrowserRouter([
           {
             path: 'create',
             element: <PersonGuideCreatePage />,
+          },
+        ],
+      },
+      {
+        path: routes.services.index,
+        children: [
+          {
+            index: true,
+            element: <ServicesPage />,
+          },
+          {
+            path: ':id',
+            element: <ServiceEditPage />,
+          },
+          {
+            path: 'create',
+            element: <ServiceCreatePage />,
           },
         ],
       },
