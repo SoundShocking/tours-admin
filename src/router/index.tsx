@@ -63,6 +63,8 @@ import {
   StatusCreatePage,
   StatusEditPage,
   StatusesPage,
+  TourEditPage,
+  ToursPage,
   TypeCreatePage,
   TypeEditPage,
   TypesPage,
@@ -433,6 +435,19 @@ export const router = createBrowserRouter([
           {
             path: 'create',
             element: <ServiceCreatePage />,
+          },
+        ],
+      },
+      {
+        path: routes.tours.index,
+        children: [
+          {
+            index: true,
+            element: <ToursPage />,
+          },
+          {
+            path: ':id',
+            element: <TourEditPage />,
           },
         ],
       },

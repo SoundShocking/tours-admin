@@ -13,6 +13,7 @@ export const useLocationsCities = (
   const { contentLanguage } = useSettingsStore()
 
   const { data: cities, isFetching } = useQuery({
+    enabled: perPage === 'all' ? !!country : true,
     gcTime: 120_000,
     placeholderData: keepPreviousData,
     queryFn: () => getLocationsCities(page, perPage, search, order, by, country),

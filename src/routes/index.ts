@@ -103,6 +103,11 @@ export const routes = {
     edit: (id: number) => `/statuses/${id}`,
     index: '/statuses',
   },
+  tours: {
+    create: '/tours/create',
+    edit: (id: number) => `/tours/${id}`,
+    index: '/tours',
+  },
   types: {
     create: '/types/create',
     edit: (id: number) => `/types/${id}`,

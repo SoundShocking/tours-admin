@@ -1,3 +1,5 @@
+import { IType } from '@/types/types'
+
 export interface IGroup {
   code: string
   description: string
@@ -7,7 +9,7 @@ export interface IGroup {
   id: number
   in_search: number
   order: null | number
-  // types: TourType[]
+  types: IType[]
 }
 
 export interface IGetGroupsParams {

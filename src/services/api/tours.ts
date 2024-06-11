@@ -1,5 +1,17 @@
 import instance from '@/services/api/instance'
-import { IResponseWithPagination, ITour } from '@/types'
+import {
+  ICreateResourceResponse,
+  IGetToursInfiniteParams,
+  IGetToursParams,
+  IResponseWithData,
+  IResponseWithPagination,
+  ITour,
+  ITourDetailed,
+} from '@/types'
+
+export const createTour = (form: any) => {
+  return instance.post<ICreateResourceResponse>('/tours', form)
+}
 
 export const getTours = (
   page: number,
@@ -9,7 +21,7 @@ export const getTours = (
   by: null | string,
   status: null | string
 ) => {
-  const params = {
+  const params: IGetToursParams = {
     by,
     order,
     page,
@@ -28,7 +40,7 @@ export const getTours = (
 }
 
 export const getToursInfinite = (page: number, perPage: number, search: string) => {
-  const params = {
+  const params: IGetToursInfiniteParams = {
     page,
     'per-page': perPage,
     search: null,
@@ -41,4 +53,16 @@ export const getToursInfinite = (page: number, perPage: number, search: string) 
   return instance.get<IResponseWithPagination<ITour[]>>('/tours', {
     params,
   })
+}
+
+export const getTour = (id: number) => {
+  return instance.get<IResponseWithData<ITourDetailed>>(`/tours/${id}`)
+}
+
+export const updateTour = (id: number, form: any) => {
+  return instance.put(`/tours/${id}`, form)
+}
+
+export const deleteTour = (id: number) => {
+  return instance.delete(`/tours/${id}`)
 }

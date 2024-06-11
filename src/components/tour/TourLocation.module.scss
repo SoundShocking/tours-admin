@@ -1,0 +1,6 @@
+.location {
+  display: grid;
+  grid-template-columns: 1fr 1fr 32px;
+  align-items: end;
+  gap: 16px;
+}

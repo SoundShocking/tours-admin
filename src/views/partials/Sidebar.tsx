@@ -6,6 +6,7 @@ import { Menu, type MenuProps } from 'antd'
 import {
   FaBed,
   FaBuilding,
+  FaCompass,
   FaCubes,
   FaEarthEurope,
   FaFlag,
@@ -57,6 +58,11 @@ const items: MenuProps['items'] = [
     <Link to={routes.posts.index}>Posts</Link>,
     routes.posts.index,
     <FaNewspaper size={iconSize} />
+  ),
+  getItem(
+    <Link to={routes.tours.index}>Tours</Link>,
+    routes.tours.index,
+    <FaCompass size={iconSize} />
   ),
   getItem(
     <Link to={routes.foods.index}>Foods</Link>,
