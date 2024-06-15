@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 
 import { MediaUploadModal } from '@/components/MediaUploadModal'
-import { MEDIA_PAGE_SIZES, MODAL_TOP_OFFSET } from '@/constants'
+import { IMAGE_FALLBACK, MEDIA_PAGE_SIZES, MODAL_TOP_OFFSET } from '@/constants'
 import { useMediaFiles, usePagination } from '@/hooks'
 import { IMediaFile } from '@/types'
 import { Button, Card, Col, Flex, Image, Modal, Pagination, Row, Spin } from 'antd'
@@ -18,12 +18,24 @@ export const MediaSingleFile: FC<Props> = ({ file, setFile }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
 
-  const { onPageChange, onPageSizeChange, page, perPage } = usePagination()
+  const { onPageChange, onPageSizeChange, page, perPage } = usePagination(18)
 
-  const { isFetching, media, refetch } = useMediaFiles(page, perPage)
+  const { isFetching, media } = useMediaFiles(page, perPage)
 
-  const onAddFile = () => {
+  const openModal = () => {
     setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const openUploadModal = () => {
+    setIsUploadModalOpen(true)
+  }
+
+  const closeUploadModal = () => {
+    setIsUploadModalOpen(false)
   }
 
   const onRemoveFile = () => {
@@ -45,7 +57,7 @@ export const MediaSingleFile: FC<Props> = ({ file, setFile }) => {
         )}
 
         <Flex gap={'middle'}>
-          <Button onClick={onAddFile} type={'primary'}>
+          <Button onClick={openModal} type={'primary'}>
             {file ? 'Change File' : 'Add File'}
           </Button>
 
@@ -58,7 +70,7 @@ export const MediaSingleFile: FC<Props> = ({ file, setFile }) => {
       <Modal
         destroyOnClose
         footer={null}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={closeModal}
         open={isModalOpen}
         style={{ top: MODAL_TOP_OFFSET }}
         title={'Choose File'}
@@ -67,7 +79,7 @@ export const MediaSingleFile: FC<Props> = ({ file, setFile }) => {
         <Flex gap={'large'} vertical>
           <Flex align={'center'} justify={'space-between'}>
             <div>
-              <Button onClick={() => setIsUploadModalOpen(true)} type={'primary'}>
+              <Button onClick={openUploadModal} type={'primary'}>
                 Add File
               </Button>
             </div>
@@ -94,6 +106,7 @@ export const MediaSingleFile: FC<Props> = ({ file, setFile }) => {
                       <Image
                         alt={file.alt}
                         className={styles.image}
+                        fallback={IMAGE_FALLBACK}
                         loading={'lazy'}
                         preview={false}
                         src={file.preview}
@@ -118,11 +131,7 @@ export const MediaSingleFile: FC<Props> = ({ file, setFile }) => {
             </Card>
           </Spin>
 
-          <MediaUploadModal
-            isOpen={isUploadModalOpen}
-            refetch={refetch}
-            setIsOpen={setIsUploadModalOpen}
-          />
+          <MediaUploadModal closeModal={closeUploadModal} isOpen={isUploadModalOpen} />
         </Flex>
       </Modal>
     </>

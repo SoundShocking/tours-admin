@@ -2,30 +2,31 @@ import { FC } from 'react'
 
 import { IMAGE_FORMATS, MAX_FILE_SIZE, MODAL_TOP_OFFSET, NOTIFICATION_PLACEMENT } from '@/constants'
 import { getCSRF } from '@/helpers'
+import { useQueryClient } from '@tanstack/react-query'
 import { Modal, Upload, type UploadProps, notification, theme } from 'antd'
 import { FaCloudArrowUp } from 'react-icons/fa6'
 
 interface Props {
+  closeModal: () => void
   isOpen: boolean
-  refetch: () => void
-  setIsOpen: (open: boolean) => void
 }
 
 const { Dragger } = Upload
 const { useToken } = theme
 
-export const MediaUploadModal: FC<Props> = ({ isOpen, refetch, setIsOpen }) => {
+export const MediaUploadModal: FC<Props> = ({ closeModal, isOpen }) => {
   const { token } = useToken()
+  const client = useQueryClient()
 
   const onAllFilesUploaded = () => {
-    setIsOpen(false)
+    closeModal()
 
     notification.success({
       message: 'All your files have been successfully uploaded!',
       placement: NOTIFICATION_PLACEMENT,
     })
 
-    refetch()
+    client.refetchQueries({ queryKey: ['media-files'] })
   }
 
   const props: UploadProps = {
@@ -72,7 +73,7 @@ export const MediaUploadModal: FC<Props> = ({ isOpen, refetch, setIsOpen }) => {
     <Modal
       destroyOnClose
       footer={null}
-      onCancel={() => setIsOpen(false)}
+      onCancel={closeModal}
       open={isOpen}
       style={{ top: MODAL_TOP_OFFSET }}
       title={'Upload Media'}
