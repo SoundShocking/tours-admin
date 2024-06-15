@@ -1,4 +1,3 @@
-import { IGuide } from '@/types/guides'
 import { ILocationCity, ILocationRegion } from '@/types/locations'
 import { IMediaFile } from '@/types/media'
 import { IOperator } from '@/types/operators'
@@ -14,10 +13,10 @@ export interface ITour {
   banner: IMediaFile | null
   codes: string[]
   content: string
-  discount: null
-  hot: null
+  discount: number
+  hot: number
   id: number
-  low_price: null
+  low_price: number
   max_group_size: number
   publish_status: string
   ratings: ITourRating
@@ -42,7 +41,7 @@ export interface ITourDetailed {
   content: string
   discount: number
   gallery: IMediaFile[] | null
-  guide_languages: IGuide[]
+  // guide_languages: IGuide[]
   hot: number
   id: number
   itinerary: ITourItinerary[]

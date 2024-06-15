@@ -13,7 +13,7 @@ export const MediaPage: FC = () => {
   useDocumentTitle('Media')
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
-  const { onPageChange, onPageSizeChange, page, perPage } = usePagination()
+  const { onPageChange, onPageSizeChange, page, perPage } = usePagination(18)
 
   const [fileId, setFileId] = useState<null | number>(null)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
@@ -83,11 +83,7 @@ export const MediaPage: FC = () => {
         </Spin>
       </Flex>
 
-      <MediaUploadModal
-        isOpen={isUploadModalOpen}
-        refetch={refetch}
-        setIsOpen={setIsUploadModalOpen}
-      />
+      <MediaUploadModal closeModal={() => setIsUploadModalOpen(false)} isOpen={isUploadModalOpen} />
 
       <MediaFileInfoModal
         fileId={fileId}

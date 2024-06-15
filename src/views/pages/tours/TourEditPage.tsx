@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 
 import {
   ContentLanguageSwitcher,
+  MediaGallery,
   MediaSingleFile,
   TourCodes,
   TourItinerary,
@@ -30,6 +31,7 @@ import {
   Spin,
   Switch,
   Tabs,
+  type TabsProps,
 } from 'antd'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -52,6 +54,7 @@ export const TourEditPage: FC = () => {
 
   const [form] = Form.useForm()
 
+  const [gallery, setGallery] = useState<IMediaFile[]>([])
   const [seoPreview, setSeoPreview] = useState<IMediaFile | null>(null)
   const [banner, setBanner] = useState<IMediaFile | null>(null)
   const [brochure, setBrochure] = useState<IMediaFile | null>(null)
@@ -112,6 +115,138 @@ export const TourEditPage: FC = () => {
     types: [],
   }
 
+  const items: TabsProps['items'] = [
+    {
+      children: (
+        <div>
+          <Form.Item label={'Name'} name={'name'} rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item label={'Slug'} name={'slug'} rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item style={{ marginBottom: 0 }}>
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item
+                  label={'Tour Length Days'}
+                  name={'tour_length_days'}
+                  rules={[{ required: true }]}
+                >
+                  <InputNumber />
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item
+                  label={'Max Group Size'}
+                  name={'max_group_size'}
+                  rules={[{ required: true }]}
+                >
+                  <InputNumber />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form.Item>
+
+          <Form.Item label={'Stickers'} style={{ marginBottom: 0 }}>
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item label={'Hot'} name={'hot'}>
+                  <Switch title={'Hot'} />
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item label={'Discount'} name={'discount'}>
+                  <Switch title={'Discount'} />
+                </Form.Item>
+              </Col>
+
+              <Col span={8}>
+                <Form.Item label={'Low Price'} name={'low_price'}>
+                  <Switch title={'Low Price'} />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form.Item>
+
+          <TourCodes />
+
+          <Form.Item label={'Relevance'} name={'relevance'} rules={[{ required: true }]}>
+            <Select
+              disabled={isCountriesFetching}
+              loading={isCountriesFetching}
+              mode={'multiple'}
+              options={relevanceOptions}
+              placeholder={'Choose Relevance'}
+            />
+          </Form.Item>
+
+          <Form.Item label={'Types'} name={'types'} rules={[{ required: true }]}>
+            <Select
+              disabled={isGroupsFetching}
+              filterOption={(input, option) =>
+                (option?.label.toLocaleLowerCase() ?? '').includes(input.toLowerCase())
+              }
+              loading={isGroupsFetching}
+              mode={'multiple'}
+              options={typesOptions}
+              placeholder={'Choose Types'}
+              showSearch
+            />
+          </Form.Item>
+
+          <Form.Item label={'Operator'} name={'operator'} rules={[{ required: true }]}>
+            <Select
+              disabled={isOperatorsFetching}
+              filterOption={(input, option) =>
+                (option?.label.toLocaleLowerCase() ?? '').includes(input.toLowerCase())
+              }
+              loading={isOperatorsFetching}
+              options={(operators?.data || []).map(operator => ({
+                label: operator.name,
+                value: operator.id,
+              }))}
+              placeholder={'Choose Operator'}
+              showSearch
+            />
+          </Form.Item>
+        </div>
+      ),
+      key: 'Basic',
+      label: 'Basic',
+    },
+    {
+      children: (
+        <Flex gap={'large'} vertical>
+          <TourLocations />
+
+          <TourNatureLocations />
+        </Flex>
+      ),
+      key: 'locations',
+      label: 'Locations',
+    },
+    {
+      children: <TourItinerary />,
+      key: 'itinerary',
+      label: 'Itinerary',
+    },
+    {
+      children: <MediaGallery files={gallery} setFiles={setGallery} />,
+      key: 'gallery',
+      label: 'Gallery',
+    },
+    {
+      children: <SEO seoPreview={seoPreview} setSeoPreview={setSeoPreview} />,
+      key: 'seo',
+      label: 'SEO',
+    },
+  ]
+
   useEffect(() => {
     if (tour) {
       const startPoint = tour.tour_points.find(point => point.key === 'start_point')
@@ -164,6 +299,7 @@ export const TourEditPage: FC = () => {
         })
       }
 
+      setGallery(tour.gallery || [])
       setBanner(tour.banner)
       setBrochure(tour.brochure)
       setSeoPreview(tour.seo?.media || null)
@@ -187,121 +323,7 @@ export const TourEditPage: FC = () => {
           <Row gutter={[16, 16]}>
             <Col span={18}>
               <Card>
-                <Tabs type={'card'}>
-                  <Tabs.TabPane key={'basic'} tab={'Basic'}>
-                    <Form.Item label={'Name'} name={'name'} rules={[{ required: true }]}>
-                      <Input />
-                    </Form.Item>
-
-                    <Form.Item label={'Slug'} name={'slug'} rules={[{ required: true }]}>
-                      <Input />
-                    </Form.Item>
-
-                    <Form.Item style={{ marginBottom: 0 }}>
-                      <Row gutter={16}>
-                        <Col span={8}>
-                          <Form.Item
-                            label={'Tour Length Days'}
-                            name={'tour_length_days'}
-                            rules={[{ required: true }]}
-                          >
-                            <InputNumber />
-                          </Form.Item>
-                        </Col>
-
-                        <Col span={8}>
-                          <Form.Item
-                            label={'Max Group Size'}
-                            name={'max_group_size'}
-                            rules={[{ required: true }]}
-                          >
-                            <InputNumber />
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Form.Item>
-
-                    <Form.Item label={'Stickers'} style={{ marginBottom: 0 }}>
-                      <Row gutter={16}>
-                        <Col span={8}>
-                          <Form.Item label={'Hot'} name={'hot'}>
-                            <Switch title={'Hot'} />
-                          </Form.Item>
-                        </Col>
-
-                        <Col span={8}>
-                          <Form.Item label={'Discount'} name={'discount'}>
-                            <Switch title={'Discount'} />
-                          </Form.Item>
-                        </Col>
-
-                        <Col span={8}>
-                          <Form.Item label={'Low Price'} name={'low_price'}>
-                            <Switch title={'Low Price'} />
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Form.Item>
-
-                    <TourCodes />
-
-                    <Form.Item label={'Relevance'} name={'relevance'} rules={[{ required: true }]}>
-                      <Select
-                        disabled={isCountriesFetching}
-                        loading={isCountriesFetching}
-                        mode={'multiple'}
-                        options={relevanceOptions}
-                        placeholder={'Choose Relevance'}
-                      />
-                    </Form.Item>
-
-                    <Form.Item label={'Types'} name={'types'} rules={[{ required: true }]}>
-                      <Select
-                        disabled={isGroupsFetching}
-                        filterOption={(input, option) =>
-                          (option?.label.toLocaleLowerCase() ?? '').includes(input.toLowerCase())
-                        }
-                        loading={isGroupsFetching}
-                        mode={'multiple'}
-                        options={typesOptions}
-                        placeholder={'Choose Types'}
-                        showSearch
-                      />
-                    </Form.Item>
-
-                    <Form.Item label={'Operator'} name={'operator'} rules={[{ required: true }]}>
-                      <Select
-                        disabled={isOperatorsFetching}
-                        filterOption={(input, option) =>
-                          (option?.label.toLocaleLowerCase() ?? '').includes(input.toLowerCase())
-                        }
-                        loading={isOperatorsFetching}
-                        options={(operators?.data || []).map(operator => ({
-                          label: operator.name,
-                          value: operator.id,
-                        }))}
-                        placeholder={'Choose Operator'}
-                        showSearch
-                      />
-                    </Form.Item>
-                  </Tabs.TabPane>
-
-                  <Tabs.TabPane key={'locations'} tab={'Locations'}>
-                    <Flex gap={'large'} vertical>
-                      <TourLocations />
-
-                      <TourNatureLocations />
-                    </Flex>
-                  </Tabs.TabPane>
-
-                  <Tabs.TabPane key={'itinerary'} tab={'Itinerary'}>
-                    <TourItinerary />
-                  </Tabs.TabPane>
-
-                  <Tabs.TabPane key={'seo'} tab={'SEO'}>
-                    <SEO seoPreview={seoPreview} setSeoPreview={setSeoPreview} />
-                  </Tabs.TabPane>
-                </Tabs>
+                <Tabs items={items} type={'card'} />
               </Card>
             </Col>
 

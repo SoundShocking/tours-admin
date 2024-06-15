@@ -3,7 +3,8 @@
 	aspect-ratio: 1/1;
 	display: flex;
 
-	&:hover {
+	&:hover,
+	&.active {
 		.controls {
 			visibility: visible;
 			backdrop-filter: blur(2px);
