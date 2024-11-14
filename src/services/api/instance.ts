@@ -2,7 +2,7 @@ import { getCSRF } from '@/helpers'
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'http://elife.loc/api',
+  baseURL: 'https://elife-tours-dev.rctest.xyz/api',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',

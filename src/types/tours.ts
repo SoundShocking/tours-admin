@@ -1,3 +1,5 @@
+import { IAccommodationType } from '@/types/accommodation-types'
+import { IFood } from '@/types/foods'
 import { ILocationCity, ILocationRegion } from '@/types/locations'
 import { IMediaFile } from '@/types/media'
 import { IOperator } from '@/types/operators'
@@ -55,7 +57,7 @@ export interface ITourDetailed {
   relevance: string[]
   reviews_count: number
   seo: ISEO | null
-  services: []
+  services: ITourServices
   slug: string
   tour_length_days: number
   tour_name: string
@@ -109,4 +111,97 @@ interface ITourPoints {
 export interface IRelatedTour {
   id: number
   tour_name: string
+}
+
+export type ITourServices = (
+  | ITourServiceAccommodation
+  | ITourServiceFlights
+  | ITourServiceGuide
+  | ITourServiceInsurance
+  | ITourServiceMeals
+  | ITourServiceOptional
+  | ITourServiceOthers
+  | ITourServiceTransport
+)[]
+interface ITourServiceDescription {
+  description: string
+  id: number
+  is_included: number
+  service_id: number
+  tour_id: number
+}
+
+interface ITourServiceGuide {
+  guide: {
+    descriptions: ITourServiceDescription[]
+  }
+  id: number
+  key: 'guide'
+  name: 'guide'
+}
+
+interface ITourServiceMeals {
+  id: number
+  key: 'meals'
+  meals: {
+    descriptions: ITourServiceDescription[]
+    food_options: IFood[]
+  }
+  name: 'meals'
+}
+
+interface ITourServiceOthers {
+  id: number
+  key: 'others'
+  name: 'others'
+  others: {
+    descriptions: ITourServiceDescription[]
+  }
+}
+
+interface ITourServiceFlights {
+  flights: {
+    descriptions: ITourServiceDescription[]
+  }
+  id: number
+  key: 'flights'
+  name: 'flights'
+}
+
+interface ITourServiceOptional {
+  id: number
+  key: 'optional'
+  name: 'optional'
+  optional: {
+    descriptions: ITourServiceDescription[]
+  }
+}
+
+interface ITourServiceInsurance {
+  id: number
+  insurance: {
+    descriptions: ITourServiceDescription[]
+  }
+  key: 'insurance'
+  name: 'insurance'
+}
+
+interface ITourServiceTransport {
+  id: number
+  key: 'transport'
+  name: 'transport'
+  transport: {
+    descriptions: ITourServiceDescription[]
+    ships: []
+  }
+}
+
+interface ITourServiceAccommodation {
+  accommodation: {
+    accommodation_types: IAccommodationType[]
+    descriptions: ITourServiceDescription[]
+  }
+  id: number
+  key: 'accommodation'
+  name: 'accommodation'
 }

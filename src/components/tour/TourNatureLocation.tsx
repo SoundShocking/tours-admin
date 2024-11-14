@@ -10,7 +10,7 @@ interface Props {
   field: FormListFieldData
   remove: FormListOperation['remove']
 }
-export const NatureLocation: FC<Props> = ({ field, remove }) => {
+export const TourNatureLocation: FC<Props> = ({ field, remove }) => {
   const form = Form.useFormInstance()
   const location = Form.useWatch<{ countryId: null | number; regionId: null | number }>(
     ['nature_locations', field.name],

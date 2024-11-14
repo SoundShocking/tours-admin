@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { NatureLocation } from '@/components/tour/NatureLocation'
+import { TourNatureLocation } from '@/components/tour/TourNatureLocation'
 import { Button, Card, ConfigProvider, Flex, Form } from 'antd'
 
 export const TourNatureLocations: FC = () => {
@@ -20,7 +20,7 @@ export const TourNatureLocations: FC = () => {
             <Flex gap={'large'} vertical>
               <Flex gap={'small'} vertical>
                 {fields.map(field => (
-                  <NatureLocation field={field} key={field.key} remove={remove} />
+                  <TourNatureLocation field={field} key={field.key} remove={remove} />
                 ))}
               </Flex>
 
